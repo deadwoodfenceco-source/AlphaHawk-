@@ -29,7 +29,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Available Commands:\n\n"
+        "Commands:\n\n"
         "/start\n"
         "/help\n"
         "/test\n"
@@ -45,11 +45,11 @@ async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def idea(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ideas = [
-        "Build an AI fence estimate generator.",
-        "Create a meme coin scanner Telegram bot.",
-        "Build a local service lead finder.",
-        "Create an AI music video automation system.",
-        "Make a crypto news alert bot."
+        "Create an AI fence estimate generator.",
+        "Build a meme coin scanner bot.",
+        "Create a local lead generation tool.",
+        "Build an AI music video pipeline.",
+        "Create a crypto alert channel."
     ]
 
     await update.message.reply_text(
@@ -60,31 +60,23 @@ async def idea(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text.lower()
 
+    responses = [
+        "🦅 AlphaHawk received your message.",
+        "🦅 Copy that.",
+        "🦅 Standing by.",
+        "🦅 Message logged.",
+        "🦅 AlphaHawk acknowledges."
+    ]
+
     if "hello" in user_text:
         await update.message.reply_text(
             "🦅 Hello Jerren. AlphaHawk standing by."
         )
-    else:
+
+    elif "btc" in user_text:
         await update.message.reply_text(
-            f"🦅 AlphaHawk received:\n\n{update.message.text}"
-        )
+           
 
-
-app = Application.builder().token(TOKEN).build()
-
-app.add_handler(CommandHandler("start", start))
-app.add_handler(CommandHandler("help", help_command))
-app.add_handler(CommandHandler("test", test))
-app.add_handler(CommandHandler("idea", idea))
-
-app.add_handler(
-    MessageHandler(
-        filters.TEXT & ~filters.COMMAND,
-        echo,
-    )
-)
-
-app.run_polling()
 
 
 
