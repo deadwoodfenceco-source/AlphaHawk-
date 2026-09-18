@@ -1,4 +1,5 @@
 import os
+import random
 
 from telegram import Update
 from telegram.ext import (
@@ -9,45 +10,53 @@ from telegram.ext import (
     filters,
 )
 
-# Load token from Railway environment variables
 TOKEN = os.getenv("TELEGRAM_TOKEN", "").strip()
 
 if not TOKEN:
     raise SystemExit("❌ TELEGRAM_TOKEN is missing")
 
-print("🦅 AlphaHawk Starting...")
-print(f"✅ Token Loaded: {bool(TOKEN)}")
 
-
-# /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🦅 AlphaHawk Online!\n\n"
         "Commands:\n"
         "/start\n"
         "/help\n"
-        "/test"
+        "/test\n"
+        "/idea"
     )
 
 
-# /help command
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Available Commands:\n\n"
-        "/start - Start AlphaHawk\n"
-        "/help - Show commands\n"
-        "/test - Test bot"
+        "/start\n"
+        "/help\n"
+        "/test\n"
+        "/idea"
     )
 
 
-# /test command
 async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "✅ AlphaHawk Test Successful"
     )
 
 
-# Reply to normal messages
+async def idea(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    ideas = [
+        "Build an AI fence estimate generator.",
+        "Create a meme coin scanner Telegram bot.",
+        "Build a local service lead finder.",
+        "Create an AI music video automation system.",
+        "Make a crypto news alert bot."
+    ]
+
+    await update.message.reply_text(
+        random.choice(ideas)
+    )
+
+
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text.lower()
 
@@ -55,37 +64,19 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(
             "🦅 Hello Jerren. AlphaHawk standing by."
         )
-
-    elif "btc" in user_text:
-        await update.message.reply_text(
-            "₿ Bitcoin module coming soon."
-        )
-
-    elif "eth" in user_text:
-        await update.message.reply_text(
-            "⚡ Ethereum module coming soon."
-        )
-
-    elif "fence" in user_text:
-        await update.message.reply_text(
-            "🪵 DeadWood Fence assistant ready."
-        )
-
     else:
         await update.message.reply_text(
             f"🦅 AlphaHawk received:\n\n{update.message.text}"
         )
 
 
-# Build bot
 app = Application.builder().token(TOKEN).build()
 
-# Commands
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("help", help_command))
 app.add_handler(CommandHandler("test", test))
+app.add_handler(CommandHandler("idea", idea))
 
-# Normal text messages
 app.add_handler(
     MessageHandler(
         filters.TEXT & ~filters.COMMAND,
@@ -93,10 +84,8 @@ app.add_handler(
     )
 )
 
-print("🚀 AlphaHawk Online")
-
-# Start bot
 app.run_polling()
+
 
 
 
