@@ -49,11 +49,32 @@ async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Reply to normal messages
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_text = update.message.text
+    user_text = update.message.text.lower()
 
-    await update.message.reply_text(
-        f"🦅 You said:\n\n{user_text}"
-    )
+    if "hello" in user_text:
+        await update.message.reply_text(
+            "🦅 Hello Jerren. AlphaHawk standing by."
+        )
+
+    elif "btc" in user_text:
+        await update.message.reply_text(
+            "₿ Bitcoin module coming soon."
+        )
+
+    elif "eth" in user_text:
+        await update.message.reply_text(
+            "⚡ Ethereum module coming soon."
+        )
+
+    elif "fence" in user_text:
+        await update.message.reply_text(
+            "🪵 DeadWood Fence assistant ready."
+        )
+
+    else:
+        await update.message.reply_text(
+            f"🦅 AlphaHawk received:\n\n{update.message.text}"
+        )
 
 
 # Build bot
@@ -76,5 +97,6 @@ print("🚀 AlphaHawk Online")
 
 # Start bot
 app.run_polling()
+
 
 
