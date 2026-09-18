@@ -1,30 +1,29 @@
-import os
-from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
-
-TOKEN = os.getenv("TELEGRAM_TOKEN", "").strip()
-
-if not TOKEN:
-    raise SystemExit("TELEGRAM_TOKEN is missing")
-
-print(
-    "Token check:",
-    "loaded =", bool(TOKEN),
-    "length =", len(TOKEN),
-    "colon =", ":" in TOKEN
-)
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🦅 AlphaHawk is online!")
+imasync def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "🦅 AlphaHawk Online\n\n"
+        "Commands:\n"
+        "/start\n"
+        "/test\n"
+        "/help"
+    )
 
 async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("✅ Test successful")
 
-app = Application.builder().token(TOKEN).build()
-
-app.add_handler(CommandHandler("start", start))
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "Available Commands:\n\n"
+        "/start\n"
+        "/test\n"
+        "/help"
+        app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("test", test))
+app.add_handler(CommandHandler("help", help_command))
 
+    )
+
+
+app 
 print("🦅 AlphaHawk polling started")
 
 app.run_polling()
