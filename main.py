@@ -75,6 +75,43 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     elif "btc" in user_text:
         await update.message.reply_text(
+            "₿ Bitcoin module coming soon."
+        )
+
+    elif "eth" in user_text:
+        await update.message.reply_text(
+            "⚡ Ethereum module coming soon."
+        )
+
+    elif "fence" in user_text:
+        await update.message.reply_text(
+            "🪵 DeadWood Fence assistant ready."
+        )
+
+    else:
+        await update.message.reply_text(
+            random.choice(responses)
+        )
+
+
+app = Application.builder().token(TOKEN).build()
+
+app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("help", help_command))
+app.add_handler(CommandHandler("test", test))
+app.add_handler(CommandHandler("idea", idea))
+
+app.add_handler(
+    MessageHandler(
+        filters.TEXT & ~filters.COMMAND,
+        echo
+    )
+)
+
+print("🚀 AlphaHawk Online")
+
+app.run_polling()
+
            
 
 
